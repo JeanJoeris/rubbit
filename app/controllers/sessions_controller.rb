@@ -9,8 +9,10 @@ class SessionsController < ApplicationController
     conn_2.headers["Authorization"] = "bearer #{token}"
     user_info_response = conn_2.get
     user_info = JSON.parse(user_info_response.body)
+    require "pry"; binding.pry
     user = User.find_or_create_by(username: user_info["name"])
     user.token = token
+    user.refresh_token = oauth["refresh_token"]
     user.save
     conn_3 = Faraday.new("https://oauth.reddit.com/subreddits/mine/subscriber")
     conn_3.headers["Authorization"] = "bearer #{token}"

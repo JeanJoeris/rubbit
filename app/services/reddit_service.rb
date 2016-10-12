@@ -23,6 +23,12 @@ class RedditService
     user
   end
 
+  def self.top_posts(subreddit_uri)
+    response = Faraday.get("https://www.reddit.com#{subreddit_uri}top.json")
+    posts = JSON.parse(response.body)
+    posts["data"]["children"]
+  end
+
   def self.karma(user)
     response = authorized_conn(user.token).get("/api/v1/me/karma")
   end

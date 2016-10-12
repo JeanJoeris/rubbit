@@ -6,7 +6,7 @@ describe "Reddit API service", :type => :feature do
     user_data = RedditService.user_data(user)
 
     expect(user_data["name"]).to eq("api_curious_test")
-    expect(user_data["link_karma"]).to eq(1)
+    expect(user_data["link_karma"]).to eq(3)
     expect(user_data["comment_karma"]).to eq(0)
   end
 

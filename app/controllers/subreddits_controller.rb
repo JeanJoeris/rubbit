@@ -1,5 +1,5 @@
 class SubredditsController < ApplicationController
   def index
-    @subreddits = RedditService.subreddits(current_user)
+    @subreddits = Subreddit.by_user(current_user)
   end
 end

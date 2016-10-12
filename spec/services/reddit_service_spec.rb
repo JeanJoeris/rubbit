@@ -25,10 +25,18 @@ describe "Reddit API service", :type => :feature do
   end
 
   it "finds a subreddits top posts" do
-
     posts = RedditService.top_posts("/r/APICurious/")
 
     expect(posts.count).to eq(3)
     expect(posts.first[:data][:title]).to eq("APIs ??? How to they work?")
+  end
+
+  it "finds a posts comments" do
+    raw_post = RedditService.top_posts("/r/APICurious/").first
+    post = Post.new(raw_post[:data])
+    comments = RedditService.comments(post)
+
+    expect(comments.count).to eq(1)
+    expect(comments.first[:data][:body]).to eq("APIs for life!")
   end
 end

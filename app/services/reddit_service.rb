@@ -29,6 +29,12 @@ class RedditService
     posts[:data][:children]
   end
 
+  def self.comments(post)
+    response = Faraday.get("https://www.reddit.com#{post.permalink}.json")
+    comments = JSON.parse(response.body, symbolize_names: true)
+    comments[1][:data][:children]
+  end
+
   def self.karma(user)
     response = authorized_conn(user.token).get("/api/v1/me/karma")
   end

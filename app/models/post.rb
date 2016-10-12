@@ -19,6 +19,10 @@ class Post
     data[:score]
   end
 
+  def permalink
+    data[:permalink]
+  end
+
   private
       attr_reader :data
 end

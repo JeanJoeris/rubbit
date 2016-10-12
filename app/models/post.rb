@@ -3,6 +3,10 @@ class Post
     @data = post_data
   end
 
+  def comments
+
+  end
+
   def title
     data[:title]
   end

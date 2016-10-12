@@ -9,4 +9,13 @@ describe Post, type: :model do
     expect(post.author).to eq("test")
     expect(post.score).to eq(2)
   end
+
+  it "has comments" do
+    raw_post = RedditService.top_posts("/r/APICurious/").first
+    post = Post.new(raw_post[:data])
+    comments = post.comments
+
+    expect(comments.count).to eq(1)
+    expect(comments.first.body).to eq("APIs for life!")
+  end
 end

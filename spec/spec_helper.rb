@@ -37,7 +37,7 @@ RSpec.configure do |config|
 
   def create_user_with_real_token
     user = create(:user)
-    RedditService.refresh_token(user)
+    RedditOAUTHService.refresh_token(user)
     user
   end
 

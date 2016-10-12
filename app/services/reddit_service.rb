@@ -1,12 +1,4 @@
 class RedditService
-  def self.refresh_token(user)
-    conn = Faraday.new("https://www.reddit.com/api/v1/access_token")
-    conn.basic_auth(ENV["reddit_id"], ENV["reddit_secret"])
-    response = conn.post("https://www.reddit.com/api/v1/access_token", grant_type: "refresh_token", refresh_token: user.refresh_token)
-    response_data = JSON.parse(response.body)
-    user.update_attribute(:token, response_data["access_token"])
-  end
-
   def self.user_data(user)
     conn = Faraday.new("https://oauth.reddit.com/api/v1/me.json")
     conn.headers["Authorization"] = "bearer #{user.token}"
@@ -14,13 +6,25 @@ class RedditService
   end
 
   def self.subreddits(user)
-    conn = Faraday.new("https://oauth.reddit.com/subreddits/mine/subscriber?limit=100")
-    conn.headers["Authorization"] = "bearer #{user.token}"
-    subreddits = JSON.parse(conn.get.body)
+    response = authorized_conn(user.token).get("/subreddits/mine/subscriber?limit=100")
+    subreddits = JSON.parse(response.body)
     subreddits["data"]["children"]
   end
 
-  # private
-  #     def conn
-  #       Faraday.new("https://oauth....")
+  def self.get_user(tokens)
+    response = authorized_conn(tokens[:access_token]).get("/api/v1/me.json")
+    user_info = JSON.parse(response.body)
+    user = User.find_or_create_by(username: user_info["name"])
+    user.token = tokens[:access_token]
+    user.refresh_token = tokens[:refresh_token]
+    user.save
+    user
+  end
+
+  private
+      def self.authorized_conn(token)
+        conn = Faraday.new("https://oauth.reddit.com")
+        conn.headers["Authorization"] = "bearer #{token}"
+        conn
+      end
 end

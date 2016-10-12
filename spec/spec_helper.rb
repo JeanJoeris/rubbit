@@ -26,6 +26,9 @@ RSpec.configure do |config|
     RedditOAUTHService.refresh_token(user)
     user
   end
+
+  # config.include Rack::Test::Methods
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

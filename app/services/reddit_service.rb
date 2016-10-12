@@ -6,6 +6,7 @@ class RedditService
   end
 
   def self.subreddits(user)
+# require "pry"; binding.pry
     response = authorized_conn(user.token).get("/subreddits/mine/subscriber?limit=100")
     subreddits = JSON.parse(response.body)
     subreddits["data"]["children"]
@@ -15,10 +16,15 @@ class RedditService
     response = authorized_conn(tokens[:access_token]).get("/api/v1/me.json")
     user_info = JSON.parse(response.body)
     user = User.find_or_create_by(username: user_info["name"])
-    user.token = tokens[:access_token]
-    user.refresh_token = tokens[:refresh_token]
-    user.save
+    user.update_attributes(token: tokens[:access_token], refresh_token: tokens[:refresh_token])
+    # user.token = tokens[:access_token]
+    # user.refresh_token = tokens[:refresh_token]
+    # user.save
     user
+  end
+
+  def self.karma(user)
+    response = authorized_conn(user.token).get("/api/v1/me/karma")
   end
 
   private

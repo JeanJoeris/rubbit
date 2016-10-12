@@ -24,9 +24,9 @@ class RedditService
   end
 
   def self.top_posts(subreddit_uri)
-    response = Faraday.get("https://www.reddit.com#{subreddit_uri}top.json")
-    posts = JSON.parse(response.body)
-    posts["data"]["children"]
+    response = Faraday.get("https://www.reddit.com#{subreddit_uri}.json")
+    posts = JSON.parse(response.body, symbolize_names: true)
+    posts[:data][:children]
   end
 
   def self.karma(user)

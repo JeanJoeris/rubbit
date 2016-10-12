@@ -10,7 +10,9 @@ class Subreddit
   end
 
   def top_posts
-    RedditService.top_posts(url)
+    RedditService.top_posts(url).map do |raw_post|
+      Post.new(raw_post[:data])
+    end
   end
 
   def display_name

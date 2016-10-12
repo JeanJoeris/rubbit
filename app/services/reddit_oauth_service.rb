@@ -7,7 +7,6 @@ class RedditOAUTHService
                                       redirect_uri: 'http://0.0.0.0:3000/auth/reddit/callback')
 
     oauth = JSON.parse(oauth_response.body, symbolize_names: true)
-    # require "pry"; binding.pry
     { access_token: oauth[:access_token], refresh_token: oauth[:refresh_token] }
   end
 

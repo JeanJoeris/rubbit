@@ -4,7 +4,9 @@ class Post
   end
 
   def comments
-
+    RedditService.comments(self).map do |raw_comment|
+      Comment.new(raw_comment[:data])
+    end
   end
 
   def title

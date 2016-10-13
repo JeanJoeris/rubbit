@@ -13,9 +13,9 @@ class Subreddit
     Subreddit.new(RedditService.subreddit_by_name(name)[:data])
   end
 
-  def top_posts
+  def links
     RedditService.top_posts(url).map do |raw_post|
-      Post.new(raw_post[:data])
+      Link.new(raw_post[:data])
     end
   end
 

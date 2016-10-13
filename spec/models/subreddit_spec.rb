@@ -14,8 +14,8 @@ describe Subreddit, type: :model do
       subreddits = Subreddit.by_user(user)
       test_subreddit = subreddits.find { |s| s.display_name == "APICurious"}
 
-      first_post = test_subreddit.top_posts.first
-      expect(test_subreddit.top_posts.count).to eq(3)
+      first_post = test_subreddit.links.first
+      expect(test_subreddit.links.count).to eq(3)
       expect(first_post.title).to eq("APIs ??? How to they work?")
     end
   end

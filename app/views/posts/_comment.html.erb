@@ -1,0 +1,8 @@
+<li>
+  <h2><%= comment.score %> <%= comment.body %></h2>
+  <p><%= comment.author %></p>
+</li>
+
+<ul>
+  <%= render partial: comment, collection: comment.children %>
+</ul>

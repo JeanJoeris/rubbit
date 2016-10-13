@@ -1,0 +1,15 @@
+<h2>
+  <%= link.score %>
+  <% if link.is_self  %>
+    <%= link_to link.title, link.permalink %>
+  <% else %>
+    <%= image_tag link.thumbnail %>
+    <%= link_to link.title, link.url %>
+  <% end %>
+
+</h2>
+<p>
+  By: <%= link.author %> |
+  <%= link_to "comments", link.permalink %>
+  <%= "(#{link.comment_number})" %>
+</p>

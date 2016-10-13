@@ -3,10 +3,19 @@ class Post
     @data = post_data
   end
 
+  def self.find(post_data)
+    raw_post = RedditService.find_post(post_data)
+    Post.new(raw_post)
+  end
+
   def comments
-    RedditService.comments(self).map do |raw_comment|
+    data[1][:data][:children].map do |raw_comment|
       Comment.new(raw_comment[:data])
     end
+  end
+
+  def link
+    Link.new(data.first[:data][:children].first[:data])
   end
 
   def title

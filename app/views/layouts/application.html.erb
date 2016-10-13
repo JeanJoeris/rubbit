@@ -9,7 +9,15 @@
   </head>
 
   <body>
-    <%= current_user.username if logged_in? %><br>
+    <% if logged_in? %>
+      <b>Username: </b>
+      <%= current_user.username %>
+      <b>Karma: </b>
+      <%= current_user.karma %>
+      <%= link_to "Logout", logout_path %>
+    <% else %>
+      <%= link_to "Login with Reddit", "https://www.reddit.com/api/v1/authorize?client_id=#{ENV["reddit_id"]}&&response_type=code&state=123foo&redirect_uri=http://0.0.0.0:3000/auth/reddit/callback&duration=permanent&scope=identity,mysubreddits,read,submit,edit" %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

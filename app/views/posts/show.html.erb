@@ -1,0 +1,7 @@
+<h1>
+  <%= image_tag(@post.link.thumbnail) unless @post.link.is_self %>
+  <%= @post.link.title %>
+</h1>
+<ul>
+  <%= render partial: "comment", collection: @post.comments %>
+</ul>

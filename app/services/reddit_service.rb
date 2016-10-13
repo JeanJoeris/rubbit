@@ -21,9 +21,6 @@ class RedditService
     user_info = JSON.parse(response.body, symbolize_names: true)
     user = User.find_or_create_by(username: user_info[:name])
     user.update_attributes(token: tokens[:access_token], refresh_token: tokens[:refresh_token])
-    # user.token = tokens[:access_token]
-    # user.refresh_token = tokens[:refresh_token]
-    # user.save
     user
   end
 
@@ -31,6 +28,12 @@ class RedditService
     response = Faraday.get("https://www.reddit.com#{subreddit_uri}.json")
     posts = JSON.parse(response.body, symbolize_names: true)
     posts[:data][:children]
+  end
+
+  def self.find_post(post_data)
+    permalink = form_permalink(post_data)
+    response = Faraday.get("https://www.reddit.com#{permalink}.json")
+    JSON.parse(response.body, symbolize_names: true)
   end
 
   def self.comments(post)
@@ -48,5 +51,9 @@ class RedditService
         conn = Faraday.new("https://oauth.reddit.com")
         conn.headers["Authorization"] = "bearer #{token}"
         conn
+      end
+
+      def self.form_permalink(post_data)
+        "/r/#{post_data[:subreddit_name]}/comments/#{post_data[:id]}/#{post_data[:post_name]}"
       end
 end

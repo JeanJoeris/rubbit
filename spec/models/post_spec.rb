@@ -1,21 +1,20 @@
 require 'rails_helper'
 
 describe Post, type: :model do
-  it "has an title, author, url, subreddit and upvote score" do
-    post = Post.new({ title: "This is a test", url: "https://foo.com", author: "test", score: 2 })
+  it "has links" do
+    post = Post.find({subreddit_name: "APICurious", id: "576c47", post_name: "apis_how_to_they_work"})
+    link = post.link
 
-    expect(post.title).to eq("This is a test")
-    expect(post.url).to eq("https://foo.com")
-    expect(post.author).to eq("test")
-    expect(post.score).to eq(2)
+    expect(link.title).to eq("APIs ??? How to they work?")
+    expect(link.author).to eq("api_curious_test")
   end
 
   it "has comments" do
-    raw_post = RedditService.top_posts("/r/APICurious/").first
-    post = Post.new(raw_post[:data])
+    post = Post.find({subreddit_name: "APICurious", id: "576c47", post_name: "apis_how_to_they_work"})
     comments = post.comments
 
-    expect(comments.count).to eq(1)
+    expect(comments.count).to eq(2)
     expect(comments.first.body).to eq("APIs for life!")
+    expect(comments.last.body).to eq("Another top level comment")
   end
 end

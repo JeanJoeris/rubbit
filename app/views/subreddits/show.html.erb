@@ -1,8 +1,7 @@
+<h4><%= link_to "Back to subreddits", subreddits_path %></h4>
+
 <h1><%= @subreddit.display_name %></h1>
 
-<% @subreddit.top_posts.each do |post| %>
-  <h2>
-    <%= link_to post.title, "https://reddit.com#{post.permalink}" %>
-    <%= post.score %>
-  </h2>
+<% @subreddit.links.each do |link| %>
+  <%= render partial: "link", locals: { link: link } %>
 <% end %>

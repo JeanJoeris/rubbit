@@ -41,7 +41,7 @@ describe "Reddit API service", :type => :feature do
     post = Post.new(raw_post[:data])
     comments = RedditService.comments(post)
 
-    expect(comments.count).to eq(1)
+    expect(comments.count).to eq(2)
     expect(comments.first[:data][:body]).to eq("APIs for life!")
   end
 end

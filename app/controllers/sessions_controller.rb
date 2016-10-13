@@ -1,11 +1,14 @@
 class SessionsController < ApplicationController
   def create
     tokens = RedditOAUTHService.get_tokens(params[:code])
-
     user = RedditService.get_user(tokens)
 
     session[:user_id] = user.id
+    redirect_to "/"
+  end
 
+  def destroy
+    session[:user_id] = nil
     redirect_to "/"
   end
 

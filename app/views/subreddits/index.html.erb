@@ -1,5 +1,5 @@
 <h3>Subreddits</h3>
 
 <% @subreddits.each do |subreddit| %>
-  <h5><%= link_to subreddit.display_name, "http://reddit.com#{subreddit.url}" %></h2>
+  <h5><%= link_to subreddit.display_name, subreddit.url %></h2>
 <% end %>

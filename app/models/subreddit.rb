@@ -5,8 +5,12 @@ class Subreddit
 
   def self.by_user(user)
     RedditService.subreddits(user).map do |raw_subreddit|
-      Subreddit.new(raw_subreddit["data"])
+      Subreddit.new(raw_subreddit[:data])
     end
+  end
+
+  def self.by_name(name)
+    Subreddit.new(RedditService.subreddit_by_name(name)[:data])
   end
 
   def top_posts
@@ -16,11 +20,11 @@ class Subreddit
   end
 
   def display_name
-    subreddit_data["display_name"]
+    subreddit_data[:display_name]
   end
 
   def url
-    subreddit_data["url"]
+    subreddit_data[:url]
   end
 
   private

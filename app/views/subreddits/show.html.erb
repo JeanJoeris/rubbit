@@ -1,0 +1,8 @@
+<h1><%= @subreddit.display_name %></h1>
+
+<% @subreddit.top_posts.each do |post| %>
+  <h2>
+    <%= link_to post.title, "https://reddit.com#{post.permalink}" %>
+    <%= post.score %>
+  </h2>
+<% end %>

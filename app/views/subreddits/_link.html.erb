@@ -10,6 +10,6 @@
 </h2>
 <p>
   By: <%= link.author %> |
-  <%= link_to "comments", link.permalink %>
+  <%= link_to "comments", link.permalink, id: link.name %>
   <%= "(#{link.comment_number})" %>
 </p>

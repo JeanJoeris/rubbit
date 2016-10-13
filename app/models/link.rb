@@ -35,6 +35,10 @@ class Link
     data[:is_self]
   end
 
+  def name
+    data[:name]
+  end
+
   private
       attr_reader :data
 end
